@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const url = "https://paybutton.onrender.com/"
+const url = "https://your-url.com/"
 
 func main() {
 
@@ -19,7 +19,7 @@ func main() {
 	go func() {
 		for {
 			ping.PayBPing(url, results)
-			time.Sleep(1 * time.Minute)
+			time.Sleep(30 * time.Minute)
 		}
 	}()
 
