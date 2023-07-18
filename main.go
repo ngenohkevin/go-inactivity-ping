@@ -19,7 +19,7 @@ func main() {
 	go func() {
 		for {
 			ping.PayBPing(url, results)
-			time.Sleep(20 * time.Minute)
+			time.Sleep(40 * time.Minute)
 		}
 	}()
 
