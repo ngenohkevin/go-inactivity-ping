@@ -38,3 +38,9 @@ func PayBPing(url string, ch chan<- Result) {
 	}
 
 }
+func checkStatusCode(statusCode int) error {
+	if statusCode == http.StatusServiceUnavailable {
+		return http.ErrServerClosed
+	}
+	return nil
+}
