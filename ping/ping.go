@@ -29,7 +29,7 @@ func PayBPing(url string, ch chan<- Result) {
 		t := time.Since((start).Round(time.Millisecond))
 		ch <- Result{
 			URL:        url,
-			Err:        nil,
+			Err:        checkStatusCode(resp.StatusCode),
 			Latency:    t,
 			StatusCode: resp.StatusCode,
 			TimeStamp:  time.Now(),
