@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/ngenohkevin/go-inactivity-ping/ping"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/ngenohkevin/go-inactivity-ping/ping"
 )
 
 const url = "https://your-url.com/"
