@@ -21,9 +21,10 @@ func PayBPing(url string, ch chan<- Result) {
 		start := time.Now()
 
 		resp, err := http.Get(url)
-		if err != nil {
+		if err != nil || resp.StatusCode == http.StatusServiceUnavailable {
 			if shouldRetry(attempt) {
-				time.Sleep(backoffDuration(attempt))
+				backoff := backoffDuration(attempt)
+				time.Sleep(backoff)
 				continue
 			}
 
