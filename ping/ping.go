@@ -42,7 +42,7 @@ func PayBPing(url string, ch chan<- Result) {
 		if resp.StatusCode == http.StatusOK {
 			ch <- Result{
 				URL:        url,
-				Err:        nil,
+				Err:        checkStatusCode(resp.StatusCode),
 				Latency:    t,
 				StatusCode: resp.StatusCode,
 				TimeStamp:  time.Now(),
@@ -58,7 +58,7 @@ func PayBPing(url string, ch chan<- Result) {
 
 		ch <- Result{
 			URL:        url,
-			Err:        nil,
+			Err:        checkStatusCode(resp.StatusCode),
 			Latency:    t,
 			StatusCode: resp.StatusCode,
 			TimeStamp:  time.Now(),
@@ -76,4 +76,11 @@ func shouldRetry(attempt int) bool {
 func backoffDuration(attempt int) time.Duration {
 	// Exponential backoff formula: initialBackoff * 2^(attempt-1)
 	return initialBackoff << uint(attempt)
+}
+
+func checkStatusCode(statusCode int) error {
+	if statusCode == http.StatusServiceUnavailable {
+		return http.ErrServerClosed
+	}
+	return nil
 }
