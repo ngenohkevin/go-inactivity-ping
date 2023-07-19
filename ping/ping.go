@@ -1,6 +1,7 @@
 package ping
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -14,34 +15,53 @@ type Result struct {
 }
 
 func PayBPing(url string, ch chan<- Result) {
-	attempts := 3
+	attempts := 3 // Number of retry attempts
 
-	start := time.Now()
+	for i := 0; i < attempts; i++ {
+		start := time.Now()
 
-	if resp, err := http.Get(url); err != nil {
-		ch <- Result{
-			URL:        url,
-			Err:        err,
-			Latency:    0,
-			StatusCode: http.StatusInternalServerError,
-			TimeStamp:  time.Now(),
+		resp, err := http.Get(url)
+		if err != nil {
+			ch <- Result{
+				URL:        url,
+				Err:        err,
+				Latency:    0,
+				StatusCode: http.StatusInternalServerError,
+				TimeStamp:  time.Now(),
+			}
+			return
 		}
-	} else {
-		t := time.Since((start).Round(time.Millisecond))
-		ch <- Result{
-			URL:        url,
-			Err:        checkStatusCode(resp.StatusCode),
-			Latency:    t,
-			StatusCode: resp.StatusCode,
-			TimeStamp:  time.Now(),
+
+		t := time.Since(start).Round(time.Millisecond)
+
+		if resp.StatusCode == http.StatusOK {
+			ch <- Result{
+				URL:        url,
+				Err:        nil,
+				Latency:    t,
+				StatusCode: resp.StatusCode,
+				TimeStamp:  time.Now(),
+			}
+			err = resp.Body.Close()
+			return
 		}
-		err = resp.Body.Close()
+
+		// Retry after a short delay
+		time.Sleep(1 * time.Second)
 	}
 
-}
-func checkStatusCode(statusCode int) error {
-	if statusCode == http.StatusServiceUnavailable {
-		return http.ErrServerClosed
+	ch <- Result{
+		URL:        url,
+		Err:        fmt.Errorf("max retry attempts reached"),
+		Latency:    0,
+		StatusCode: http.StatusServiceUnavailable,
+		TimeStamp:  time.Now(),
 	}
-	return nil
 }
+
+//func checkStatusCode(statusCode int) error {
+//	if statusCode == http.StatusServiceUnavailable {
+//		return http.ErrServerClosed
+//	}
+//	return nil
+//}
