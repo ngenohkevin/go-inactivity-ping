@@ -14,6 +14,7 @@ type Result struct {
 }
 
 func PayBPing(url string, ch chan<- Result) {
+	attempts := 3
 
 	start := time.Now()
 
