@@ -10,7 +10,7 @@ import (
 	"github.com/ngenohkevin/go-inactivity-ping/ping"
 )
 
-const url = "https://paybutton.onrender.com/"
+const url = "https://your-url.com/"
 
 func main() {
 
