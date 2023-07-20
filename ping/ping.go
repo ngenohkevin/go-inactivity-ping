@@ -43,7 +43,7 @@ func PayBPing(url string, ch chan<- Result) {
 		if resp.StatusCode == http.StatusOK {
 			ch <- Result{
 				URL:        url,
-				Err:        checkStatusCode(resp.StatusCode),
+				Err:        nil,
 				Latency:    t,
 				StatusCode: resp.StatusCode,
 				TimeStamp:  time.Now(),
@@ -59,7 +59,7 @@ func PayBPing(url string, ch chan<- Result) {
 
 		ch <- Result{
 			URL:        url,
-			Err:        checkStatusCode(resp.StatusCode),
+			Err:        http.ErrServerClosed,
 			Latency:    t,
 			StatusCode: resp.StatusCode,
 			TimeStamp:  time.Now(),
