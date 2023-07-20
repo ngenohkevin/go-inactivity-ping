@@ -78,10 +78,3 @@ func backoffDuration(attempt int) time.Duration {
 	// Exponential backoff formula: initialBackoff * 2^(attempt-1)
 	return initialBackoff << uint(attempt)
 }
-
-func checkStatusCode(statusCode int) error {
-	if statusCode == http.StatusServiceUnavailable {
-		return http.ErrServerClosed
-	}
-	return nil
-}
