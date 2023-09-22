@@ -42,7 +42,7 @@ func main() {
 			if r.Err != nil {
 				log.Printf("%s", r.Err)
 			} else {
-				log.Printf("Status: %s, Url: %-20s, Latency: %s", r.StatusCode, r.URL, r.Latency)
+				log.Printf("Status: %s, URL: %-20s, Latency: %s", r.StatusCode, r.URL, r.Latency)
 			}
 		}
 	}
