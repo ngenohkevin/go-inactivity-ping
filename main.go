@@ -8,14 +8,13 @@ import (
 
 func main() {
 	// Create a ticker that triggers every 10 minutes.
-	ticker := time.NewTicker(15 * time.Minute)
+	ticker := time.NewTicker(12 * time.Minute)
 
 	// Create a channel to receive results.
 	results := make(chan ping.Result)
 
 	list := []string{
 		"https://paybutton.onrender.com/",
-		"https://www.arnoderrymovers.co.ke",
 	}
 
 	// Start the initial pinging of servers.
