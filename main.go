@@ -1,49 +1,35 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
-
 	"github.com/ngenohkevin/go-inactivity-ping/ping"
+	"log"
+	"time"
 )
 
-const url = "https://your-url.com/"
+//const url = "https://paybutton.onrendevr.com/"
 
 func main() {
 
+	stopper := time.After(10 * time.Minute)
+
 	results := make(chan ping.Result)
-	done := make(chan struct{})
+	list := []string{
+		"https://paybutton.onrender.com/",
+	}
 
-	go func() {
-		for {
-			ping.PayBPing(url, results)
-			time.Sleep(20 * time.Minute)
-		}
-	}()
-
-	go func() {
-		signals := make(chan os.Signal, 1)
-		signal.Notify(signals, os.Interrupt, syscall.SIGTERM)
-
-		<-signals
-
-		done <- struct{}{}
-	}()
-
-	for {
+	for _, url := range list {
+		go ping.Server(url, results)
+	}
+	for range list {
 		select {
-		case result := <-results:
-			if result.Err != nil {
-				fmt.Printf("Error pinging %s at %s: %v\n", result.URL, result.TimeStamp.Format("2006-01-02 15:04:05"), result.Err)
+		case r := <-results:
+			if r.Err != nil {
+				log.Printf("%s", r.Err)
 			} else {
-				fmt.Printf("Ping to server at %s successful! latency %v, Status Code: %d\n", result.TimeStamp.Format("2006-01-02 15:04:05"), result.Latency, result.StatusCode)
+				log.Printf("Status: %s, Url: %-20s, Latency: %s", r.StatusCode, r.URL, r.Latency)
 			}
-		case <-done:
-			fmt.Println("Terminating...")
-			return
+		case t := <-stopper:
+			log.Fatalf("timeout %s", t)
 		}
 	}
 }
