@@ -27,7 +27,7 @@ func main() {
 		for {
 			select {
 			case <-ticker.C:
-				// Ping the servers again after 10 minutes.
+				// Ping the servers again after 12 minutes.
 				for _, url := range list {
 					go ping.Server(url, results)
 				}
