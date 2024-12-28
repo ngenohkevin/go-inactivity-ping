@@ -6,7 +6,7 @@ Go Inactivity Ping is a lightweight, command-line tool written in Go that period
 
 Many hosting services automatically spin down servers after a period of inactivity, which can disrupt applications. Go Inactivity Ping ensures your server remains active by sending periodic ping requests at configurable intervals. Additionally, it offers monitoring for `.onion` (Tor) sites, helping you ensure uptime for your hidden services.
 
-The tool uses Go's native `net/http` library, along with a SOCKS5 dialer for `.onion` support, to make HTTP requests to your server. By default, it sends a ping every **20 minutes**, though this interval can be customized.
+The tool uses Go's native `net/http` library, along with a SOCKS5 dialer for `.onion` support, to make HTTP requests to your server. By default, it sends a ping every **12 minutes**, though this interval can be customized.
 
 ---
 
