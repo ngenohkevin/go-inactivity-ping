@@ -1,35 +1,27 @@
-# Go Inactivity Ping
+# **Go Inactivity Ping**
 
-Go Inactivity Ping is a command-line tool written in Go that periodically pings a server to keep it active. It helps prevent server spin-down due to inactivity by sending a ping request after a specified interval.
+Go Inactivity Ping is a lightweight, command-line tool written in Go that periodically pings servers to ensure they remain reachable. Designed to prevent server spin-down due to inactivity and monitor uptime, it now includes support for `.onion` sites hosted on the Tor network.
 
-## About the Project
+## **About the Project**
 
-Many hosting services automatically spin down servers that have been inactive for a certain period of time. This can be problematic if you have a server that performs important tasks. Go Inactivity Ping provides a simple solution to keep your server active.
+Many hosting services automatically spin down servers after a period of inactivity, which can disrupt critical applications. Go Inactivity Ping ensures your server remains active by sending periodic ping requests at configurable intervals. Additionally, it offers monitoring for `.onion` (Tor) sites, helping you ensure uptime for your hidden services.
 
-The tool uses the default go net/http library to establish a connection with your server and send a "ping" message every 20 minutes by default. This activity prevents the server from being marked as inactive by the hosting service.
+The tool uses Go's native `net/http` library, along with a SOCKS5 dialer for `.onion` support, to make HTTP requests to your server. By default, it sends a ping every **20 minutes**, though this interval can be customized.
 
-## Table of Contents
+---
 
-- [Installation](#installation)
-- [Usage](#usage)
+## **Features**
 
+- **Periodic Ping Requests**: Keeps your server active by sending requests at regular intervals.
+- **.onion Site Monitoring**: Supports `.onion` URLs with Tor network compatibility via SOCKS5 proxies.
+- **Latency Tracking**: Measures and logs the response latency for each ping.
+- **Uptime Monitoring**: Monitors the availability of your server and detects connectivity issues.
 
-## Installation
+### **Planned Features**
+- **Response Logging**: Save detailed response logs, including timestamps, status codes, and error messages, for analysis.
+- **Alerting System**: Configure notifications (e.g., email or Slack) to alert you when the server becomes unreachable or latency exceeds a threshold.
+- **Health Dashboard**: Visualize server uptime, response times, and error patterns using an intuitive dashboard.
+- **Retry Mechanism**: Automatically retry failed pings before marking a server as unreachable.
 
-To use Go Inactivity Ping, you need to have Go installed on your machine. Follow these steps to install and set up the project:
+---
 
-1. Clone the repository:
-
-```shell
-git clone https://github.com/ngenohkevin/go-inactivity-ping.git
-
-cd go-inactivity-ping
-
-go build -o go-inactivity-ping
-
-./go-inactivity-ping
-```
-
-By default, Go Inactivity Ping pings the server every 20 minutes. You can modify the interval by editing the code in the main function of the main.go file.
-
-The program will continuously ping the server until it is terminated. To stop the program, press Ctrl+C.
