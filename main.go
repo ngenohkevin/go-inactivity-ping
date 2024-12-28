@@ -15,6 +15,7 @@ func main() {
 
 	list := []string{
 		"https://paybutton.onrender.com/",
+		"http://someonionurl.onion/",
 	}
 
 	// Start the initial pinging of servers.
