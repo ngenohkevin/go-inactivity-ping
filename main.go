@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	// Create a ticker that triggers every 12 minutes.
+	// Create a ticker that triggers every 10 minutes.
 	ticker := time.NewTicker(10 * time.Minute)
 
 	// Create a channel to receive results.
