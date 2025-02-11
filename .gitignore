@@ -2,3 +2,5 @@
 .idea
 
 ping-server
+
+.env
