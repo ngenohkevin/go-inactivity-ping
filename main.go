@@ -35,9 +35,7 @@ func main() {
 
 	list := []string{
 		"https://paybutton.onrender.com/",
-		"http://dweb5sm34uzajabrjtl2jvznaaeop526p3sqi73hw4gur5ggkadqa3ad.onion/",
-		"http://iqualowxvgqaijkrxy2xrl4peewievvvocenmt2qfbkxcto6cqt2anyd.onion/",
-		"http://ajwccz5y5jn33bwt2jiibcytg2pk4gdluwmij5i4qse3oahykq4fj7id.onion/",
+		"http://someonionlink",
 	}
 
 	// Start the initial pinging of servers.
