@@ -4,3 +4,9 @@
 ping-server
 
 .env
+
+embed/config.env
+.env.example
+/build/
+config.env
+/build
