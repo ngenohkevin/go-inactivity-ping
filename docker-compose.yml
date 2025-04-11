@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  ping-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ping-monitor
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+    environment:
+      - LOKI_USER=${LOKI_USER}
+      - LOKI_API_KEY=${LOKI_API_KEY}
+      - LOKI_URL=${LOKI_URL}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - HTTP_TIMEOUT=${HTTP_TIMEOUT:-10}
+      - PING_INTERVAL=${PING_INTERVAL:-10m}
+      - MONITOR_URLS=${MONITOR_URLS}
+      - TZ=Africa/Nairobi
