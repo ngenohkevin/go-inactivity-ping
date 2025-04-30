@@ -15,9 +15,6 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-# Ensure embed/config.env exists (copy from .env if not)
-RUN if [ ! -f embed/config.env ]; then cp .env embed/config.env; fi
-
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ping-monitor
 
