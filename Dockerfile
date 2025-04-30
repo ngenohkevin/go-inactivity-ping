@@ -28,7 +28,6 @@ WORKDIR /app
 
 # Copy the binary from builder
 COPY --from=builder /app/ping-monitor /app/
-COPY --from=builder /app/embed/config.env /app/.env.example
 
 # Create volume mount point for config
 VOLUME ["/app/config"]
