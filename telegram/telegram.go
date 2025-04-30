@@ -7,7 +7,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"sync"
 	"time"
 )
@@ -42,19 +41,6 @@ func Initialize(token, chatID string) {
 		maskedToken = token[:8] + "..." + token[len(token)-4:]
 	}
 	log.Printf("Telegram bot initialized with token %s and chat ID %s", maskedToken, chatID)
-}
-
-// InitializeFromEnv loads token and chat ID from environment variables
-func InitializeFromEnv() error {
-	token := os.Getenv("TELEGRAM_BOT_TOKEN")
-	chatID := os.Getenv("TELEGRAM_CHAT_ID")
-
-	if token == "" || chatID == "" {
-		return fmt.Errorf("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in environment")
-	}
-
-	Initialize(token, chatID)
-	return nil
 }
 
 // SendMessage sends a message to the configured Telegram chat
@@ -113,7 +99,7 @@ func SendMessage(message string) error {
 		return fmt.Errorf("telegram API error, status: %d, response: %s", resp.StatusCode, string(bodyBytes))
 	}
 
-	log.Printf("Telegram message sent successfully: %s", message[:min(30, len(message))]+"...")
+	log.Printf("Telegram message sent successfully: %s", message[:minimum(30, len(message))]+"...")
 	return nil
 }
 
@@ -170,15 +156,8 @@ func NotifyRecovery(url string, statusCode string, latency time.Duration) error 
 	return SendMessage(message)
 }
 
-// GetStatus returns true if a URL is currently marked as down
-func GetStatus(url string) bool {
-	statusMap.mu.Lock()
-	defer statusMap.mu.Unlock()
-	return statusMap.status[url]
-}
-
 // Helper function for min
-func min(a, b int) int {
+func minimum(a, b int) int {
 	if a < b {
 		return a
 	}
