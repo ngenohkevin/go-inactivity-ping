@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
-	"github.com/ngenohkevin/go-inactivity-ping/embed"
 	"github.com/ngenohkevin/go-inactivity-ping/logging"
 	"github.com/ngenohkevin/go-inactivity-ping/ping"
 	"github.com/ngenohkevin/go-inactivity-ping/telegram"
@@ -35,9 +34,6 @@ func main() {
 	if err != nil {
 		log.Println("No .env file found, will use embedded config or environment variables")
 	}
-
-	// Then load embedded configuration (only sets values not already in environment)
-	embed.LoadEmbeddedConfig()
 
 	// Initialize Telegram bot
 	botToken := os.Getenv("TELEGRAM_BOT_TOKEN")
